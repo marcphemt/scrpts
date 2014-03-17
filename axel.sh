@@ -1,4 +1,4 @@
-#Scaricare con Axel
+#download with Axel
 figlet "AXEL"
 echo "Incolla l URL del sito per il download.."
 read URL
