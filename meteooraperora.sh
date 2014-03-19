@@ -60,4 +60,5 @@ do
     echo "Selezione sbagliata: scrivi 'oggi' o 'domani'!!"
   fi
 done
+
 exit
