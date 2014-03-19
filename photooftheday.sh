@@ -88,7 +88,7 @@ else
     FILEFILESIZE=$(stat -c %s $PICTURES_DIR/${TODAY}_ngeo.jpg)
  
     # If the picture has been updated
-    if [ $SITEFILESIZE != $FILEFILESIZE ]; then
+    if [[ $SITEFILESIZE != $FILEFILESIZE ]]; then
         echo "The picture has been updated, getting updated copy"
         rm $PICTURES_DIR/${TODAY}_ngeo.jpg
  
