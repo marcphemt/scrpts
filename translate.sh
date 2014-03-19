@@ -94,3 +94,4 @@ read PHRASE2
  else trs {$L1=$L2} $PHRASE2
  fi
 done
+exit
