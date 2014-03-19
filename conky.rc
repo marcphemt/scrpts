@@ -34,6 +34,7 @@ color2 gray
 
 
 
+
 TEXT
 ${font terminus:size=24}${color tan}$alignc${time %H:%M:%S}
 ${color white}${font terminus:size=11}$alignc${time %a,}${time %e %B %G}
