@@ -22,13 +22,22 @@
 echo "********"
 echo "3B METEO"
 echo "********"
+while [ "$e" != r ]
+do
 echo "Inserisci località:" #'LOC'
 echo "(gli accenti devono essere sostituiti con ')"
 read LOC
  if [[ $LOC == *[[:space:]]* ]]; 
   then
   export LOC=`echo $LOC | tr ' ' '+'`
+  e=r
  fi;
+ if [[ $LOC == *à ]];
+  then
+  echo "ricorda che i caratteri accentati vanno sostituiti con '"
+  echo " "
+ fi;
+done 
 while [ 0 ]
 do
  echo "Previsioni per oggi o domani?" #'VAR'
