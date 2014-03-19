@@ -20,4 +20,5 @@ then
  echo "L'anno deve essere di 4 cifre!"
 fi 
 done
+
 exit
