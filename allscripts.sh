@@ -1,7 +1,13 @@
-#copyright @ Marcphemt 19/03/2014
-#email mrc.mng.mm@gmail.com
-
 #! /bin/bash
+
+#Colors:
+red="\e[0;31m"
+green="\e[0;32m"
+yell="\e[1;33m"
+blue="\e[0;34m"
+z="\e[0m"
+
+
 
 #functions
 function cancel()
@@ -46,8 +52,8 @@ function photooftheday()
  
  wget https://github.com/marcphemt/scrpts/raw/master/photooftheday.sh
  chmod +x photooftheday.sh
- echo "Use it typing ./photooftheday.sh"
- echo "Press ENTER"
+ echo -e "Use it typing $yell ./photooftheday.sh $z"
+ echo -e "Press $green ENTER $z"
  read
  returne
 }
@@ -56,22 +62,27 @@ function axel()
 {
  cancel
  
- echo "Do you want the script in english or italiano? (Type eng/ita)"
+ echo -e "Do you want the script in english or italiano? $yell (Type eng/ita) $z"
  read ling
   if [[ $ling == eng ]]
   then
    wget https://github.com/marcphemt/scrpts/raw/master/axelENG.sh
    chmod +x axelENG.sh
-   echo "Use it typing ./axelENG.sh"
-   echo "Press ENTER"
+   echo -e "Use it typing $yell ./axelENG.sh $z"
+   echo -e "Press $green ENTER $z"
    read
   elif [[ $ling == ita ]]
   then
    wget https://github.com/marcphemt/scrpts/raw/master/axelITA.sh
    chmod +x axelITA.sh
-   echo "Usa lo script scrivendo ./axelITA.sh"
-   echo "Premi INVIO"
+   echo -e "Usa lo script scrivendo $yell ./axelITA.sh $z"
+   echo -e "Premi $green INVIO $z"
    read
+  else
+   echo -e "$red type 'eng' or 'ita' $z" 
+   echo -e "Press $green ENTER $z"
+   read
+   axel
   fi
  returne 
 }
@@ -80,8 +91,8 @@ function meteooraperora()
 {
  cancel
  
- echo "Remember, this script is only for Italian towns!"
- echo "Press ENTER to install, or type esc to quit.."
+ echo -e "$red Remember, this script is only for Italian towns! $z"
+ echo -e "Press $green ENTER $z to install, or type $red 'esc' $z to quit.."
  read tas
   if [[ $tas == esc ]]
   then
@@ -91,14 +102,14 @@ function meteooraperora()
     then
 	wget https://github.com/marcphemt/scrpts/raw/master/meteooraperora.sh
 	chmod +x meteooraperora.sh
-	echo "Usa lo script scrivendo ./meteooraperora.sh"
-    echo "Premi INVIO"
+	echo -e "Usa lo script scrivendo $yell ./meteooraperora.sh $z"
+    echo -e "Premi $green INVIO $z"
     read
    else
     wget https://github.com/marcphemt/scrpts/raw/master/meteooraperora1.sh
 	chmod +x meteooraperora1.sh
-	echo "Usa lo script scrivendo ./meteooraperora1.sh"
-    echo "Premi INVIO"
+	echo -e "Usa lo script scrivendo $yell ./meteooraperora1.sh $z"
+    echo -e "Premi $green INVIO $z"
     read
    fi
   fi
@@ -111,28 +122,33 @@ function youtube()
  
  if [ -e /bin/youtube-dl ]
  then
-  echo "Do you want the script in english or italiano? (Type eng/ita)"
+  echo -e "Do you want the script in english or italiano? $yell (Type eng/ita) $z"
   read a
    if [[ $a == eng ]]
     then
     wget https://github.com/marcphemt/scrpts/raw/master/youtubedownloadENG.sh
     chmod +x youtubedownloadENG.sh
-    echo "Use it typing ./youtubedownloadENG.sh"
-    echo "Press ENTER"
+    echo -e "Use it typing $yell ./youtubedownloadENG.sh $z"
+    echo -e "Press $green ENTER $z"
     read
 	returne
    elif [[ $a == ita ]]
     then
     wget https://github.com/marcphemt/scrpts/raw/master/youtubedownloadITA.sh
     chmod +x youtubedownloadITA.sh
-    echo "Usa lo script scrivendo ./youtubedowloadITA.sh"
-    echo "Premi INVIO"
+    echo -e "Usa lo script scrivendo $yell ./youtubedowloadITA.sh $z"
+    echo -e "Premi $green INVIO $z"
     read
 	returne
+   else
+    echo -e "$red Type 'eng' or 'ita' $z"
+	echo -e "Press $green ENTER $z"
+	read
+	youtube
    fi
  else
-   echo "Figlet is not istelled on your machine!!"
-   echo "Install it, and retry!"
+   echo -e "$red Figlet is not istelled on your machine!! $z"
+   echo -e "$red Install it, and retry! $z"
  fi 
  returne
 }
@@ -141,12 +157,12 @@ function birthdate()
 {
  cancel
  
- echo "Is only in italian.....for now! ^^ "
+ echo -e "$red Is only in italian.....for now! ^^ $z"
  read
  wget https://github.com/marcphemt/scrpts/raw/master/esercizio_giornodinascita.sh
  chmod +x esercizio_giornodinascita.sh
- echo "Usa lo script scrivendo ./esercizio_giornodinascita.sh"
- echo "Premi INVIO"
+ echo -e "Usa lo script scrivendo $yell ./esercizio_giornodinascita.sh $z"
+ echo -e "Premi $green INVIO $z"
  read
  returne
 }
@@ -159,14 +175,14 @@ function translate()
   then
   wget https://github.com/marcphemt/scrpts/raw/master/translate.sh
   chmod +x translate.sh
-  echo "Use it typing ./translate.sh"
-  echo "Press ENTER"
+  echo -e "Use it typing $yell ./translate.sh $z"
+  echo -e "Press $green ENTER $z"
   read
   returne
  else
-  echo "You have to install google-translate-cli!!"
-  echo "Install it than retry!"
-  echo "Press ENTER"
+  echo -e "$red You have to install google-translate-cli!! $z"
+  echo -e "$yell Install it than retry! $z"
+  echo -e "Press $green ENTER $z"
   read
   returne
  fi
