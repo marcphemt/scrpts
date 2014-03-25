@@ -30,6 +30,7 @@ clear
   options[${#options[*]}]="Install Google Translate";
   options[${#options[*]}]="Install Youtube Dowload";
   options[${#options[*]}]="Install Birth Date";
+  options[${#options[*]}]="Install International Weather";
   options[${#options[*]}]="Esc";
   select opt in "${options[@]}"; do
   case ${opt} in
@@ -40,11 +41,24 @@ clear
   ${options[3]}) translate;;
   ${options[4]}) youtube;;
   ${options[5]}) birthdate;;
+  ${options[6]}) inter;;
    
   (Esc) break; ;;
   esac;
   done
 }
+
+function inter()
+{
+ cancel
+ wget https://github.com/marcphemt/scrpts/raw/master/weather.sh
+ chmod +x weather.sh
+ echo -e "Use it typing $yell ./weather.sh $z"
+ echo -e "Press $green ENTER $z"
+ read
+ returne
+ 
+}	
 
 function photooftheday()
 {
