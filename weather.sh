@@ -1,3 +1,4 @@
+
 #! /bin/bash
 #Colors:
 r="\e[0;31m"
@@ -5,6 +6,7 @@ green="\e[0;32m"
 y="\e[1;33m"
 blue="\e[0;34m"
 z="\e[0m"
+
 
 function info()
 {
@@ -14,19 +16,23 @@ echo " In order to use the script go to"
 echo -e "$y http://weather.yahoo.com/ $z, then"
 echo " search for your city and copy the"
 echo " code (i.e. 718112) from the address bar"
-echo " and paste it in the line of the script:"
-echo -e "$y http://weather.yahooapis.com/forecastrss?w=CODE&u=c $z"
 echo -e $green "THANK YOU!" $z
 echo -e $green "######################################################" $z
 echo ""
-echo "Press ENTER"
+echo "Now paste here the [CODE] of the city.."
+read VAR1
+rm city.txt 2> /dev/null
+touch city.txt
+echo "$VAR1" >> city.txt
+echo "ALL DONE"
+echo "Press ENTER to restart the script"
 read
-exit
 }
 
 function weather()
 {
-curl -s "http://weather.yahooapis.com/forecastrss?w=718112&u=c" > ~/weather.xml
+VAR=`cat city.txt`
+curl -s "http://weather.yahooapis.com/forecastrss?w=$VAR&u=c" > ~/weather.xml
 temp=`grep "yweather:condition" ~/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 cond=`grep "yweather:condition" ~/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 wind=`grep "yweather:wind" ~/weather.xml | grep -o "speed=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
@@ -52,28 +58,28 @@ condee=`grep "Fri" ~/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\
 f=`grep "day=" ~/weather.xml | grep "Sat" | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '/' ' '`
 condf=`grep "Sat" ~/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 condff=`grep "Sat" ~/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
-g=`grep "day=" ~/weather.xml | grep "Sun" | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '/' ' '`
-condg=`grep "Sun" ~/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
-condgg=`grep "Sun" ~/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
+g=`grep "day=" ~/weather.xml | grep -w "Sun" | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '/' ' '`
+condg=`grep -w "Sun" ~/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
+condgg=`grep -w "Sun" ~/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 
 echo -e "$green TODAY$z"
 echo " $city, $cond $temp°" 
 echo -e " Wind: $wind$k Humidity: $h%"
 echo " $hour"
 echo " #####################################################"
-echo -e "$green MON=$z $a $r HIGH:$z $conda° $y LOW:$z $condaa° "
-echo -e "$green TUE=$z $b $r HIGH:$z $condb° $y LOW:$z $condbb° "
-echo -e "$green WED=$z $c $r HIGH:$z $condc° $y LOW:$z $condcc° "
-echo -e "$green THU=$z $d $r HIGH:$z $condd° $y LOW:$z $conddd° "
-echo -e "$green FRI=$z $e $r HIGH:$z $conde° $y LOW:$z $condee° "
-echo -e "$green SAT=$z $f $r HIGH:$z $condf° $y LOW:$z $condff° "
-echo -e "$green SUN=$z $g $r HIGH:$z $condg° $y LOW:$z $condgg° "
+echo -e "$green MON=$z $a \t $r HIGH:$z $conda° \t $y LOW:$z $condaa° " 
+echo -e "$green TUE=$z $b \t $r HIGH:$z $condb° \t $y LOW:$z $condbb° " 
+echo -e "$green WED=$z $c \t $r HIGH:$z $condc° \t $y LOW:$z $condcc° "
+echo -e "$green THU=$z $d \t $r HIGH:$z $condd° \t $y LOW:$z $conddd° "
+echo -e "$green FRI=$z $e \t $r HIGH:$z $conde° \t $y LOW:$z $condee° "
+echo -e "$green SAT=$z $f \t $r HIGH:$z $condf° \t $y LOW:$z $condff° "
+echo -e "$green SUN=$z $g \t $r HIGH:$z $condg° \t $y LOW:$z $condgg° "
 echo " #####################################################"
-rm ~/weather.xml
+rm ~/weather.xml 2> /dev/null
 echo " Thank You For Using The Script!"
 echo " Press ENTER"
 read
-exit
+exit 0
 }
 
 function begin()
@@ -83,10 +89,12 @@ function begin()
   echo -e "$y  Weather$z"
   echo -e $y " *******" $z
   echo "  Ver 0.1 by Marcphemt."
+  echo "If is the first time you use the script"
+  echo "go to Import/Change The City!"
   echo ""
   declare -a option
   options[${#options[*]}]="Get The Weather!";
-  options[${#options[*]}]="Info About The Use Of The Script";
+  options[${#options[*]}]="Import/Change The City";
   options[${#options[*]}]="Esc";
   select opt in "${options[@]}"; do
   case ${opt} in
@@ -104,6 +112,12 @@ function returne()
  cancel
  begin
  exit
+}
+
+function cancel()
+{
+   clear
+   echo ""
 }
 
 begin
