@@ -30,7 +30,7 @@ clear
   options[${#options[*]}]="Install Google Translate";
   options[${#options[*]}]="Install Youtube Dowload";
   options[${#options[*]}]="Install Birth Date";
-  options[${#options[*]}]="Install International Weather";
+  options[${#options[*]}]="Install International Weather (EN/IT)";
   options[${#options[*]}]="Esc";
   select opt in "${options[@]}"; do
   case ${opt} in
@@ -51,11 +51,27 @@ clear
 function inter()
 {
  cancel
- wget https://github.com/marcphemt/scrpts/raw/master/weather.sh
- chmod +x weather.sh
- echo -e "Use it typing $yell ./weather.sh $z"
- echo -e "Press $green ENTER $z"
- read
+ echo -e "Do you want the script in english or italiano? $yell (Type eng/ita) $z"
+ read ling1
+  if [[ $ling1 == eng ]]
+  then
+   wget https://github.com/marcphemt/scrpts/raw/master/weather.sh
+   chmod +x weather.sh
+   echo -e "Use it typing $yell ./weather.sh $z"
+   echo -e "Press $green ENTER $z"
+   read
+  elif [[ $ling1 == ita ]]
+  then
+   wget https://github.com/marcphemt/scrpts/raw/master/weatherITA.sh
+   chmod +x weatherITA.sh
+   echo -e "Usa lo script scrivendo $yell ./weatherITA.sh $z"
+   echo -e "Premi $green INVIO $z"
+   read
+  else
+   echo -e "$red type 'eng' or 'ita' $z" 
+   echo -e "Press $green ENTER $z"
+   read
+  fi
  returne
  
 }	
@@ -96,7 +112,6 @@ function axel()
    echo -e "$red type 'eng' or 'ita' $z" 
    echo -e "Press $green ENTER $z"
    read
-   axel
   fi
  returne 
 }
@@ -158,7 +173,6 @@ function youtube()
     echo -e "$red Type 'eng' or 'ita' $z"
 	echo -e "Press $green ENTER $z"
 	read
-	youtube
    fi
  else
    echo -e "$red Figlet is not istelled on your machine!! $z"
