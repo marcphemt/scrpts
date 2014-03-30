@@ -21,9 +21,9 @@ echo -e $green "######################################################" $z
 echo ""
 echo "Ora incolla qui il [CODICE] della città.."
 read VAR1
-rm city.txt 2> /dev/null
-touch city.txt
-echo "$VAR1" >> city.txt
+rm .city.txt 2> /dev/null
+touch .city.txt
+echo "$VAR1" >> .city.txt
 echo "TUTTO FATTO!"
 echo "Premi ENTER per ricaricare lo script"
 read
@@ -31,8 +31,8 @@ read
 
 function weather()
 {
-VAR=`cat city.txt`
-#ITA=`sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'`
+VAR=`cat .city.txt`
+DATA=`date +%u`
 curl -s "http://weather.yahooapis.com/forecastrss?w=$VAR&u=c" > ~/weather.xml
 temp=`grep "yweather:condition" ~/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 cond=`grep "yweather:condition" ~/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
@@ -62,32 +62,199 @@ condff=`grep "Sat" ~/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\
 g=`grep "day=" ~/weather.xml | grep -w "Sun" | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '/' ' '`
 condg=`grep -w "Sun" ~/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 condgg=`grep -w "Sun" ~/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
-
+ if [[ $DATA == 7 ]]
+ then
+ meteo1
+ elif [[ $DATA == 1 ]]
+ then
+ meteo2
+ elif [[ $DATA == 2 ]]
+ then
+ meteo3
+ elif [[ $DATA == 3 ]]
+ then
+ meteo4
+ elif [[ $DATA == 4 ]]
+ then
+ meteo5
+ elif [[ $DATA == 5 ]]
+ then
+ meteo6
+ elif [[ $DATA == 6 ]]
+ then
+ meteo7
+ fi
+}
+ 
+function meteo1()
+{
 echo -e "$green OGGI$z"
-echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'
+echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
 echo -e " Vento: $wind$k Umidità: $h%"
 echo " $hour" | sed -e 's/Thu/Gio/g' -e 's/Fri/Ven/g' -e 's/Sat/Sab/g' -e 's/Sun/Dom/g' -e 's/Mon/Lun/g' -e 's/Tue/Mar/g' -e 's/Wed/Mer/g'
-echo -e $blue" ##############################"$z
-echo -e "$green LUN=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' 
+echo -e $blue" #################################"$z
+echo -e "$green DOM=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
 echo ""
-echo -e "$green MAR=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'
+echo -e "$green LUN=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
 echo ""
-echo -e "$green MER=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'
+echo -e "$green MAR=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g'  | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
 echo ""
-echo -e "$green GIO=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'
+echo -e "$green MER=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
 echo ""
-echo -e "$green VEN=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'
-echo ""
-echo -e "$green SAB=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'
-echo ""
-echo -e "$green DOM=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g'
-echo -e $blue" ##############################"$z
+echo -e "$green GIO=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e $blue" #################################"$z
 rm ~/weather.xml 2> /dev/null
 echo " Grazie Per Aver Usato Lo Script!"
 echo " Premi ENTER"
 read
 exit 0
 }
+
+function meteo2()
+{
+echo -e "$green OGGI$z"
+echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e " Vento: $wind$k Umidità: $h%"
+echo " $hour" | sed -e 's/Thu/Gio/g' -e 's/Fri/Ven/g' -e 's/Sat/Sab/g' -e 's/Sun/Dom/g' -e 's/Mon/Lun/g' -e 's/Tue/Mar/g' -e 's/Wed/Mer/g'
+echo -e $blue" #################################"$z
+echo -e "$green LUN=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green MAR=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g'  | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green MER=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green GIO=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green VEN=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Grazie Per Aver Usato Lo Script!"
+echo " Premi ENTER"
+read
+exit 0
+}
+
+function meteo3()
+{
+echo -e "$green OGGI$z"
+echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e " Vento: $wind$k Umidità: $h%"
+echo " $hour" | sed -e 's/Thu/Gio/g' -e 's/Fri/Ven/g' -e 's/Sat/Sab/g' -e 's/Sun/Dom/g' -e 's/Mon/Lun/g' -e 's/Tue/Mar/g' -e 's/Wed/Mer/g'
+echo -e $blue" #################################"$z
+echo -e "$green MAR=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g'  | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green MER=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green GIO=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green VEN=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green SAB=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Grazie Per Aver Usato Lo Script!"
+echo " Premi ENTER"
+read
+exit 0
+}
+
+function meteo4()
+{
+echo -e "$green OGGI$z"
+echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e " Vento: $wind$k Umidità: $h%"
+echo " $hour" | sed -e 's/Thu/Gio/g' -e 's/Fri/Ven/g' -e 's/Sat/Sab/g' -e 's/Sun/Dom/g' -e 's/Mon/Lun/g' -e 's/Tue/Mar/g' -e 's/Wed/Mer/g'
+echo -e $blue" #################################"$z
+echo -e "$green MER=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green GIO=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green VEN=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green SAB=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green DOM=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Grazie Per Aver Usato Lo Script!"
+echo " Premi ENTER"
+read
+exit 0
+}
+
+
+function meteo5()
+{
+echo -e "$green OGGI$z"
+echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e " Vento: $wind$k Umidità: $h%"
+echo " $hour" | sed -e 's/Thu/Gio/g' -e 's/Fri/Ven/g' -e 's/Sat/Sab/g' -e 's/Sun/Dom/g' -e 's/Mon/Lun/g' -e 's/Tue/Mar/g' -e 's/Wed/Mer/g'
+echo -e $blue" #################################"$z
+echo -e "$green GIO=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green VEN=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green SAB=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green DOM=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green LUN=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Grazie Per Aver Usato Lo Script!"
+echo " Premi ENTER"
+read
+exit 0
+}
+
+function meteo6()
+{
+echo -e "$green OGGI$z"
+echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e " Vento: $wind$k Umidità: $h%"
+echo " $hour" | sed -e 's/Thu/Gio/g' -e 's/Fri/Ven/g' -e 's/Sat/Sab/g' -e 's/Sun/Dom/g' -e 's/Mon/Lun/g' -e 's/Tue/Mar/g' -e 's/Wed/Mer/g'
+echo -e $blue" #################################"$z
+echo -e "$green VEN=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green SAB=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green DOM=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green LUN=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green MAR=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g'  | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Grazie Per Aver Usato Lo Script!"
+echo " Premi ENTER"
+read
+exit 0
+}
+
+function meteo7()
+{
+echo -e "$green OGGI$z"
+echo " $city, $cond $temp°" | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e " Vento: $wind$k Umidità: $h%"
+echo " $hour" | sed -e 's/Thu/Gio/g' -e 's/Fri/Ven/g' -e 's/Sat/Sab/g' -e 's/Sun/Dom/g' -e 's/Mon/Lun/g' -e 's/Tue/Mar/g' -e 's/Wed/Mer/g'
+echo -e $blue" #################################"$z
+echo -e "$green SAB=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green DOM=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green LUN=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green MAR=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g'  | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo ""
+echo -e "$green MER=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° " | sed -e 's/Partly/Parzialmente/g' | sed -e 's/Sunny/Soleggiato/g' | sed -e 's/Cloudy/Nuvoloso/g' | sed -e 's/Showers/Pioggia/g' | sed -e 's/Rain/Piovoso/g' | sed -e 's/Light/Leggermente/g' | sed -e 's/Mostly/Prevalentemente/g' | sed -e 's/Fair/Bello/g' | sed 's/Clear/Sereno/g'
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Grazie Per Aver Usato Lo Script!"
+echo " Premi ENTER"
+read
+exit 0
+}
+
 
 function begin()
 {
@@ -96,7 +263,7 @@ function begin()
   #echo -e "$y  Weather$z"
   #echo -e $y " *******" $z
   figlet "Weather"
-  echo "  Ver 0.1 by Marcphemt."
+  echo "  Ver 0.2 by Marcphemt."
   echo "NOTA:Se è la prima volta che usi lo script"
   echo "     vai su Importa/Cambia Città!"
   echo ""
