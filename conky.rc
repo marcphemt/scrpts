@@ -5,29 +5,35 @@ xftalpha 1
 update_interval 1.0
 total_run_times 0
 own_window yes
-own_window_transparent yes
+own_window_argb_visual yes 
+own_window_argb_value 170
+#own_window_transparent no
 own_window_type override
-#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
-own_window_colour black
+#own_window_colour 504F4B
+own_window_colour 757575
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_colour dark gray
 double_buffer yes
 minimum_size 1 1
 maximum_width 200
 draw_shades no
 draw_outline no
-draw_borders yes
-draw_graph_borders no
-default_color gray
+draw_borders no
+draw_graph_borders yes
+#default_color gray
 default_shade_color 000000
 default_outline_color d9d7d6
 alignment ml
-gap_x 12
-gap_y 12
+gap_x 5
+gap_y 7
 no_buffers yes
 uppercase no
 cpu_avg_samples 2
 override_utf8_locale no
 color1 red
 color2 gray
+color3 FF8800
+color4 FF7F14
 ##############################################
 #  Output
 ##############################################
@@ -36,46 +42,75 @@ color2 gray
 
 
 TEXT
-${font terminus:size=24}${color tan}$alignc${time %H:%M:%S}
-${color white}${font terminus:size=11}$alignc${time %a,}${time %e %B %G}
-${font terminus:size=9}${color green}CPU1: ${color white}$alignr${cpu cpu0}%
-${color green}${cpubar cpu0} ${color green}
-CPU2: ${color white}$alignr${cpu cpu1}%
-${color green}${cpubar cpu1} ${color green}
+${execi 250 curl -s "http://weather.yahooapis.com/forecastrss?w=718112&u=c" -o ~/.cache/weather.xml}
+${font arimo:regular:size=36}${color white}${goto 100}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font ubuntu:regular:size=8}${voffset -25}o ${font terminus}${voffset 30}
+${execi 300 cp -f ~/.conky-google-now/$(grep "yweather:condition" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*").png ~/.cache/weather.png}${image ~/.cache/weather.png -p 13,14 -s 60x60}
+${font arimo:regular:size=10}${voffset -13}${image ~/.conky-google-now/wind.png -p 75,72 -s 15x15}${alignr}${execi 300 grep "yweather:wind" ~/.cache/weather.xml | grep -o "speed=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${execi 300 grep "yweather:units" ~/.cache/weather.xml | grep -o "speed=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}
+${image ~/.conky-google-now/humidity.png -p 75,86 -s 15x15}${alignr}${execi 300 grep "yweather:atmosphere" ~/.cache/weather.xml | grep -o "humidity=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}%
+${alignc}${font arimo:italic:size=13}${color white}${execi 300 grep "yweather:location" ~/.cache/weather.xml | grep -o "city=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${voffset -10}
+#${font arimo:regular:size=9}${color white}${alignc}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]* | sed 's/Sunny/Goditi questo tempo/g'"
+#${alignc}${font ubuntu:italic:size=9}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "date=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | sed -e 's/CET//g'}${voffset -9}
+#${execi 300 grep "yweather:location" ~/.cache/weather.xml | grep -o "country=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${voffset -13}
+${color4}${hr 1}${voffset -5}
+${font cousine:size=24}${color4}$alignc${time %H:%M:%S}${voffset -13}
+${color white}${font tinus:size=12}$alignc${time %a,}${time %e %B %G}${voffset 6}
+${font terminus:size=9}${color white}CPU1:${color tan}${freq 1} MHZ ${color white}$alignr${cpu cpu1}%
+${color4}${cpubar cpu1} ${color white}
+CPU2:${color tan}${freq 2} MHZ ${color white}$alignr${cpu cpu2}%
+${color4}${cpubar cpu2} ${color white} 
 RAM: ${color white}$alignr$mem/$memmax 
-${color green}$membar ${color green}
-
-${font terminus:bold:size=11}${color tan}SISTEMA ${color white}${hr 2}${color white}
-${font terminus:normal:size=9}$sysname $kernel $alignr $machine
+${color4}$membar ${color green}
+${color white}FS:${color white} $alignr${fs_size /}/${fs_free /} ${color tan}${fs_type /}
+${color4}${fs_bar 6,139 /} ${color tan}${fs_used_perc /}%
+${color white}HOME:${color white} $alignr${fs_size /home/}/${fs_free /home/} ${color tan}${fs_type /home/}
+${color4}${fs_bar 6,139 /home/} ${color tan}${fs_used_perc /home/}%
+#${execpi ls /run/media/marcphemt/ | awk '{print $0}'}
+#${color white}Dispositivi Montati:
+#${execpi 1 /home/marcphemt/script/conkymount.sh}
+${font arimo:bold:size=11}${color tan}SISTEMA ${color white}${hr 2}${color white}
+${font terminus:normal:size=8}$sysname $kernel $alignr $machine
 Host:$alignr marcphemt@archlinux
-Uptime:$alignr$uptime
+Uptime:$alignr$uptime${voffset -8}
 
-${font terminus:bold:size=11}${color tan}CONNESSIONI ${color white}${hr 2}
-${font terminus:normal:size=9}${color white}IP eth $alignr ${addr enp2s0}
+${font arimo:bold:size=11}${color tan}CONNESSIONI ${color white}${hr 2}
+${font terminus:normal:size=8}${color white}IP eth $alignr ${addr enp2s0}
 #${font ubuntu:normal:size=9}IP wLan $alignr ${addr wlan0}
+#${color white}Up: ${upspeedgraph enp2s0 35,45 FF8800 FF8800}${alignr}Down: ${downspeedgraph enp2s0 35,45 FF8800 FF8800}
+#${goto 47}${upspeed enp2s0} ${alignr}${downspeed enp2s0}${voffset -8}
+#TOT:${goto 34}${totalup enp2s0} ${alignr}${totaldown enp2s0}${voffset -8}
+Down:${downspeedgraph enp2s0 35,140 FF8800 FF8800}
+Speed:${alignc}${downspeed enp2s0}${voffset -8}
 
-${font terminus:bold:size=11}${color tan}CPU PROCESSI ${color white}${hr 2} ${color white}
-${font terminus:normal:size=9}${color red}PROCESSI ATTIVI${alignr}${running_threads} ${color white}
-${top name 1}${alignr}${top cpu 1} %
+${font arimop:bold:size=11}${color tan}CPU PROCESSI ${color white}${hr 2} ${color white}
+#${font terminus:normal:size=9}${color red}PROCESSI ATTIVI${alignr}${running_processes} ${color white}
+${font terminus:normal:size=8}${top name 1}${alignr}${top cpu 1} %
 ${top name 2}${alignr}${top cpu 2} %
 ${top name 3}${alignr}${top cpu 3} %
 ${top name 4}${alignr}${top cpu 4} %
 ${top name 5}${alignr}${top cpu 5} %
-${top name 6}${alignr}${top cpu 6} %
-${top name 7}${alignr}${top cpu 7} %
-${top name 8}${alignr}${top cpu 8} %
-${top name 9}${alignr}${top cpu 9} %
-${top name 10}${alignr}${top cpu 10} %
+#${top name 6}${alignr}${top cpu 6} %
+#${top name 7}${alignr}${top cpu 7} %
+#${top name 8}${alignr}${top cpu 8} %
+#${top name 9}${alignr}${top cpu 9} %
+#${top name 10}${alignr}${top cpu 10} %
+#${font terminus:bold:size=11}${color tan}RAM PROCESSI ${color white}${hr 2} ${color white}
+#${font terminus:normal:size=9}${top_mem name 1}${alignr}${top mem 1} %
+#${top_mem name 2}${alignr}${top mem 2} %
+#${top_mem name 3}${alignr}${top mem 3} %
+#${top_mem name 4}${alignr}${top mem 4} %
+#${top_mem name 5}${alignr}${top mem 5} %
 ${hr 1}
-${font terminus:bold:size=11}${color tan}    COMBINAZIONI 
-${font terminus:size=9}${color red}Win+spazio$alignr${color red} Main Menu
-${color green}Win+t$alignr${color white} Terminal
+${font arimo:bold:size=11}${color tan}       COMBINAZIONI 
+${font terminus:size=8}${color green}Win+t$alignr${color white} Terminal
 ${color green}Win+e$alignr${color white} Medit
 ${color green}Win+l$alignr${color white} Lock
 ${color lightgreen}Home$alignr${color gray} Chromium
 ${color lightgreen}Win+Home$alignr${color gray} FireFox
 ${color lightgreen}PC$alignr${color gray} Thunar
-${color lightgreen}Win+PC$alignr${color gray} sudo Thunar
+#${color lightgreen}Win+PC$alignr${color gray} sudo Thunar
 ${color lightgreen}Music$alignr${color gray} Clementine
 ${color lightgreen}Mail$alignr${color gray} IRC Chat
 ${color lightgreen}X$alignr${color gray} Force Quit
+${voffset 7}${color4}${hr 1}
+${voffset 1}${color4}${font arimo:bold:size=12}DESKTOP NUMERO: ${desktop}
+${voffset -9}${color4}${hr 1}
