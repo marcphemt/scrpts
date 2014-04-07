@@ -1,4 +1,3 @@
-
 #! /bin/bash
 #Colors:
 r="\e[0;31m"
@@ -21,9 +20,9 @@ echo -e $green "######################################################" $z
 echo ""
 echo "Now paste here the [CODE] of the city.."
 read VAR1
-rm city.txt 2> /dev/null
-touch city.txt
-echo "$VAR1" >> city.txt
+rm .city.txt 2> /dev/null
+touch .city.txt
+echo "$VAR1" >> .city.txt
 echo "ALL DONE"
 echo "Press ENTER to restart the script"
 read
@@ -31,7 +30,8 @@ read
 
 function weather()
 {
-VAR=`cat city.txt`
+VAR=`cat .city.txt`
+DATA=`date +%u`
 curl -s "http://weather.yahooapis.com/forecastrss?w=$VAR&u=c" > ~/weather.xml
 temp=`grep "yweather:condition" ~/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 cond=`grep "yweather:condition" ~/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
@@ -62,25 +62,199 @@ g=`grep "day=" ~/weather.xml | grep -w "Sun" | grep -o "text=\"[^\"]*\"" | grep 
 condg=`grep -w "Sun" ~/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 condgg=`grep -w "Sun" ~/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"`
 
+if [[ $DATA == 7 ]]
+ then
+ meteo1
+ elif [[ $DATA == 1 ]]
+ then
+ meteo2
+ elif [[ $DATA == 2 ]]
+ then
+ meteo3
+ elif [[ $DATA == 3 ]]
+ then
+ meteo4
+ elif [[ $DATA == 4 ]]
+ then
+ meteo5
+ elif [[ $DATA == 5 ]]
+ then
+ meteo6
+ elif [[ $DATA == 6 ]]
+ then
+ meteo7
+fi
+}
+
+function meteo1()
+{
 echo -e "$green TODAY$z"
 echo " $city, $cond $temp°" 
 echo -e " Wind: $wind$k Humidity: $h%"
 echo " $hour"
-echo " #####################################################"
-echo -e "$green MON=$z $a \t $r HIGH:$z $conda° \t $y LOW:$z $condaa° " 
-echo -e "$green TUE=$z $b \t $r HIGH:$z $condb° \t $y LOW:$z $condbb° " 
-echo -e "$green WED=$z $c \t $r HIGH:$z $condc° \t $y LOW:$z $condcc° "
-echo -e "$green THU=$z $d \t $r HIGH:$z $condd° \t $y LOW:$z $conddd° "
-echo -e "$green FRI=$z $e \t $r HIGH:$z $conde° \t $y LOW:$z $condee° "
-echo -e "$green SAT=$z $f \t $r HIGH:$z $condf° \t $y LOW:$z $condff° "
-echo -e "$green SUN=$z $g \t $r HIGH:$z $condg° \t $y LOW:$z $condgg° "
-echo " #####################################################"
+echo -e $blue" #################################"$z
+echo -e "$green SUN=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° " 
+echo ""
+echo -e "$green MON=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° "
+echo ""
+echo -e "$green TUE=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° "
+echo ""
+echo -e "$green WED=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° "
+echo ""
+echo -e "$green THU=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° "
+echo -e $blue" #################################"$z
 rm ~/weather.xml 2> /dev/null
 echo " Thank You For Using The Script!"
 echo " Press ENTER"
 read
 exit 0
 }
+
+function meteo2()
+{
+echo -e "$green TODAY$z"
+echo " $city, $cond $temp°"
+echo -e " Wind: $wind$k Humidity: $h%"
+echo " $hour" 
+echo -e $blue" #################################"$z
+echo -e "$green MON=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° "
+echo ""
+echo -e "$green TUE=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° "
+echo ""
+echo -e "$green WED=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° "
+echo ""
+echo -e "$green THU=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° "
+echo ""
+echo -e "$green FRI=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° "
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Thank You For Using The Script!"
+echo " Press ENTER"
+read
+exit 0
+}
+
+function meteo3()
+{
+echo -e "$green TODAY$z"
+echo " $city, $cond $temp°"
+echo -e " Wind: $wind$k Humidity: $h%"
+echo " $hour" 
+echo -e $blue" #################################"$z
+echo -e "$green TUE=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° "
+echo ""
+echo -e "$green WED=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° "
+echo ""
+echo -e "$green THU=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° "
+echo ""
+echo -e "$green FRI=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° "
+echo ""
+echo -e "$green SAT=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° "
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Thank You For Using The Script!"
+echo " Press ENTER"
+read
+exit 0
+}
+
+function meteo4()
+{
+echo -e "$green TODAY$z"
+echo " $city, $cond $temp°"
+echo -e " Wind: $wind$k Humidity: $h%"
+echo " $hour"
+echo -e $blue" #################################"$z
+echo -e "$green WED=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° "
+echo ""
+echo -e "$green THU=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° "
+echo ""
+echo -e "$green FRI=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° "
+echo ""
+echo -e "$green SAT=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° "
+echo ""
+echo -e "$green SUN=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° "
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Thank You For Using The Script!"
+echo " Press ENTER"
+read
+exit 0
+}
+
+
+function meteo5()
+{
+echo -e "$green TODAY$z"
+echo " $city, $cond $temp°"
+echo -e " Wind: $wind$k Humidity: $h%"
+echo " $hour"
+echo -e $blue" #################################"$z
+echo -e "$green THU=$z $d \n     $r MAX:$z $condd°$y MIN:$z $conddd° "
+echo ""
+echo -e "$green FRI=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° "
+echo ""
+echo -e "$green SAT=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° "
+echo ""
+echo -e "$green SUN=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° "
+echo ""
+echo -e "$green MON=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° "
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Thank You For Using The Script!"
+echo " Press ENTER"
+read
+exit 0
+}
+
+function meteo6()
+{
+echo -e "$green TODAY$z"
+echo " $city, $cond $temp°"
+echo -e " Wind: $wind$k Humidity: $h%"
+echo " $hour"
+echo -e $blue" #################################"$z
+echo -e "$green FRI=$z $e \n     $r MAX:$z $conde°$y MIN:$z $condee° "
+echo ""
+echo -e "$green SAT=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° "
+echo ""
+echo -e "$green SUN=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° "
+echo ""
+echo -e "$green MON=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° "
+echo ""
+echo -e "$green TUE=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° "
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Thank You For Using The Script!"
+echo " Press ENTER"
+read
+exit 0
+}
+
+function meteo7()
+{
+echo -e "$green TODAY$z"
+echo " $city, $cond $temp°"
+echo -e " Wind: $wind$k Humidity: $h%"
+echo " $hour"
+echo -e $blue" #################################"$z
+echo -e "$green SAT=$z $f \n     $r MAX:$z $condf°$y MIN:$z $condff° "
+echo ""
+echo -e "$green SUN=$z $g \n     $r MAX:$z $condg°$y MIN:$z $condgg° "
+echo ""
+echo -e "$green MON=$z $a \n     $r MAX:$z $conda°$y MIN:$z $condaa° "
+echo ""
+echo -e "$green TUE=$z $b \n     $r MAX:$z $condb°$y MIN:$z $condbb° "
+echo ""
+echo -e "$green WED=$z $c \n     $r MAX:$z $condc°$y MIN:$z $condcc° "
+echo -e $blue" #################################"$z
+rm ~/weather.xml 2> /dev/null
+echo " Thank You For Using The Script!"
+echo " Press ENTER"
+read
+exit 0
+}
+
 
 function begin()
 {
