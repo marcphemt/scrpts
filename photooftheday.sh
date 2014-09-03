@@ -26,7 +26,7 @@
 # Set this to 'yes' to save a description (to ~/description.txt) from ngeo page
 GET_DESCRIPTION="yes"
 # Set this to the directory you want pictures saved
-PICTURES_DIR=~/Pictures
+PICTURES_DIR=~/Immagini
  
 # ********************************
 # *** FUNCTIONS
@@ -55,7 +55,7 @@ echo "===================="
 TODAY=$(date +'%Y%m%d')
  
 # If we don't have the image already today
-if [ ! -e ~/Pictures/${TODAY}_ngeo.jpg ]; then
+if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
     echo "We don't have the picture saved, save it"
  
     get_page
@@ -111,4 +111,3 @@ else
 fi
  
 clean_up
-
