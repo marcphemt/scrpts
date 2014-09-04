@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright (c) 2011 Josh Schreuder
 # http://www.postteenageliving.com
-#
+# Modified by MarcPhemt (mrc.mng.mm@gmail.com) 2014
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -19,12 +19,19 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+#COLORS
+
+red="\e[0;31m"
+green="\e[0;32m"
+yell="\e[1;33m"
+blue="\e[0;34m"
+z="\e[0m"
  
 # ********************************
 # *** OPTIONS
 # ********************************
-# Set this to 'yes' to save a description (to ~/description.txt) from ngeo page
-GET_DESCRIPTION="yes"
+# Set this to 'yes' to save a description (to ~/description.txt) from ngeo page (not yet active)
+#GET_DESCRIPTION="yes"
 # Set this to the directory you want pictures saved
 PICTURES_DIR=~/Immagini
  
@@ -54,13 +61,13 @@ echo "===================="
 # Set date
 TODAY=$(date +'%Y%m%d')
 echo "*******************************************************"
-echo "* This script will download and set automatically the *"
+echo -e "* This script will download and set$yell AUTOMATICALLY$z the *"
 echo "* National Geographic daily photo in your machine.    *"
-echo "* To set the download lacation open this script with  *"
-echo "* your notepad (like leafpad, medit, etc) and go to   *"
-echo "* OPTIONS, then set PICTURES_DIR=~/ of your choise.   *"
-echo "* This script is set up for Nitrogen and Ubuntu (and  *"
-echo "* other *buntu system)..                              *"
+echo -e "* To set the download lacation$green open this script with$z  *"
+echo -e "*$green your notepad$z (like leafpad, medit, etc) and go to   *"
+echo -e "*$yell OPTIONS$z, then set$red PICTURES_DIR=~/$z of your choise.   *"
+echo -e "*$blue This script is set up for Nitrogen and Ubuntu (and$z  *"
+echo -e "*$blue other *buntu system).$z                               *"
 echo "*******************************************************"
 echo "To continue press ENTER"
 read
