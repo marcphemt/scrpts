@@ -53,9 +53,19 @@ echo "== NGEO Wallpaper =="
 echo "===================="
 # Set date
 TODAY=$(date +'%Y%m%d')
- 
+echo "*******************************************************"
+echo "* This script will download and set automatically the *"
+echo "* National Geographic daily photo in your machine.    *"
+echo "* To set the download lacation open this script with  *"
+echo "* your notepad (like leafpad, medit, etc) and go to   *"
+echo "* OPTIONS, then set PICTURES_DIR=~/ of your choise.   *"
+echo "* This script is set up for Nitrogen and Ubuntu (and  *"
+echo "* other *buntu system)..                              *"
+echo "*******************************************************"
+echo "To continue press ENTER"
+read
 # If we don't have the image already today
-if [ ! -e ~/$PICTURES_DIR/${TODAY}_ngeo.jpg ]; then
+if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
     echo "We don't have the picture saved, save it"
  
     get_page
