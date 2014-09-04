@@ -55,7 +55,7 @@ echo "===================="
 TODAY=$(date +'%Y%m%d')
  
 # If we don't have the image already today
-if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
+if [ ! -e ~/$PICTURES_DIR/${TODAY}_ngeo.jpg ]; then
     echo "We don't have the picture saved, save it"
  
     get_page
