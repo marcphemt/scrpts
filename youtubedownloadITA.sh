@@ -1,12 +1,16 @@
 #!/bin/bash
+#Copyright (c) 2014 MarcPhemt
+#mrc.mng.mm@gmail.com
 #Questo script è inteso per avere un interfaccia
 #semplice per l uso di youtube-dl.
-#Scritto per uso personale, siete liberi di modificarlo!
-#Copyright @MarcPhemt, scritto con medit, OS archlinux.
+
 echo "************************"
 echo "***YouTube Downloader***"
 echo "************************"
-echo "Copia l URL sulla barra degli indirizzi"
+echo "Questo script funziona SOLO"
+echo "col programma Youtube-dl!!!"
+echo " "
+echo "Copia l URL dalla barra degli indirizzi"
 echo "Incolla l URL" #'URL'
 read URL
 while [ 0 ]
