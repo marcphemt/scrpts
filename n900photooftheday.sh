@@ -1,6 +1,6 @@
 #!/bin/bash
-# Copyright (c) 2011 Josh Schreuder
-# http://www.postteenageliving.com
+# Copyright (c) 2014 MarcPhemt
+# mrc.mng.mm@gmail.com
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
