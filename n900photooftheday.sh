@@ -84,8 +84,10 @@ if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
  
     echo  "Downloading image"
     wget --quiet $PICURL -O $PICTURES_DIR/${TODAY}_ngeo.jpg
- 
     
+    /usr/bin/dbus-send --print-reply --dest=com.nokia.image_viewer /com/nokia/image_viewer com.nokia.image_viewer.mime_open string:file:///home/user/MyDocs/photos/${TODAY}_ngeo.jpg
+   echo "If you like the new photo press ENTER otherwise just close x-term!"
+   read
 	
 	#This string is ONLY for Nokia N900
 	echo "Setting image as wallpaper"
