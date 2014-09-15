@@ -75,20 +75,6 @@ defaultPicURL=$bing$(echo $(curl -s $xmlURL) | grep -oP "<url>(.*)</url>" | cut 
 
 # Attempt to download the desired image resolution. If it doesn't
 # exist then download the default image resolution
-if wget --quiet --spider "$desiredPicURL"
-then
-
-    # Set picName to the desired picName
-    picName=${desiredPicURL##*/}
-    # Download the Bing pic of the day at desired resolution
-    curl -s -o $saveDir$picName $desiredPicURL
-	#mv ~/MyDocs/bing/$picName ~/MyDocs/bing/$TODAY_bing.jpg
-else
-    # Set picName to the default picName
-    picName=${defaultPicURL##*/}
-    # Download the Bing pic of the day at default resolution
-    curl -s -o $saveDir$picName $defaultPicURL
-fi
 echo "===================="
 echo "== BING Wallpaper =="
 echo "===================="
@@ -103,6 +89,22 @@ echo -e "*$blue This script is set up for N900 ONLY $z                *"
 echo "*******************************************************"
 echo "To continue press ENTER"
 read
+
+if wget --quiet --spider "$desiredPicURL"
+then
+
+    # Set picName to the desired picName
+    picName=${desiredPicURL##*/}
+    # Download the Bing pic of the day at desired resolution
+    curl -s -o $saveDir$picName $desiredPicURL
+	#mv ~/MyDocs/bing/$picName ~/MyDocs/bing/$TODAY_bing.jpg
+else
+    # Set picName to the default picName
+    picName=${defaultPicURL##*/}
+    # Download the Bing pic of the day at default resolution
+    curl -s -o $saveDir$picName $defaultPicURL
+fi
+
 
 /usr/bin/dbus-send --print-reply --dest=com.nokia.image_viewer /com/nokia/image_viewer com.nokia.image_viewer.mime_open string:file:///home/user/MyDocs/photos/${TODAY}_ngeo.jpg
 echo "If you like the new photo press ENTER otherwise just close x-term!"
