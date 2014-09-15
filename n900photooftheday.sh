@@ -1,6 +1,7 @@
 #!/bin/bash
-# Copyright (c) 2014 MarcPhemt 
-# mrc.mng.mm@gmail.com
+# Copyright (c) 2011 Josh Schreuder
+# http://www.postteenageliving.com
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -32,7 +33,7 @@ z="\e[0m"
 # Set this to 'yes' to save a description (to ~/description.txt) from ngeo page (not yet active)
 #GET_DESCRIPTION="yes"
 # Set this to the directory you want pictures saved
-PICTURES_DIR=~/Mydocs/photos
+PICTURES_DIR=~/MyDocs/photos
  
 # ********************************
 # *** FUNCTIONS
@@ -46,9 +47,9 @@ function get_page {
 function clean_up {
     # Clean up
     echo "Cleaning up temporary files"
-    if [ -e "~/MyDocs/pic_url" ]; then
+    #if [ -e "~/MyDocs/pic_url" ]; then
         rm ~/MyDocs/pic_url
-    fi
+    #fi
 }
  
 # ********************************
@@ -70,7 +71,7 @@ echo -e "*$blue other *buntu system).$z                               *"
 echo "*******************************************************"
 echo "To continue press ENTER"
 read
-
+# If we don't have the image already today
 if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
     echo "We don't have the picture saved, save it"
  
@@ -84,11 +85,52 @@ if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
     echo  "Downloading image"
     wget --quiet $PICURL -O $PICTURES_DIR/${TODAY}_ngeo.jpg
  
+    
+	
+	#This string is ONLY for Nokia N900
 	echo "Setting image as wallpaper"
-	gconftool -s --type string /apps/osso/hildon-desktop/views/1/bg-image ~/Mydocs/photos/${TODAY}_ngeo.jpg
-	gconftool -s --type string /apps/osso/hildon-desktop/views/2/bg-image ~/Mydocs/photos/${TODAY}_ngeo.jpg
-	gconftool -s --type string /apps/osso/hildon-desktop/views/3/bg-image ~/Mydocs/photos/${TODAY}_ngeo.jpg
-	gconftool -s --type string /apps/osso/hildon-desktop/views/4/bg-image ~/Mydocs/photos/${TODAY}_ngeo.jpg
+	gconftool -s --type string /apps/osso/hildon-desktop/views/1/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+	gconftool -s --type string /apps/osso/hildon-desktop/views/2/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+	gconftool -s --type string /apps/osso/hildon-desktop/views/3/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+	gconftool -s --type string /apps/osso/hildon-desktop/views/4/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+
+# Else if we have it already, check if it's the most updated copy
+else
+    get_page
+ 
+    # Got the link to the image
+    PICURL=`/bin/cat /tmp/pic_url`
+ 
+    echo  "Picture URL is: ${PICURL}"
+ 
+    # Get the filesize
+    SITEFILESIZE=$(wget --spider $PICURL 2>&1 | grep Length | awk '{print $2}')
+    FILEFILESIZE=$(stat -c %s $PICTURES_DIR/${TODAY}_ngeo.jpg)
+ 
+    # If the picture has been updated
+    if [[ $SITEFILESIZE != $FILEFILESIZE ]]; then
+        echo "The picture has been updated, getting updated copy"
+        rm $PICTURES_DIR/${TODAY}_ngeo.jpg
+ 
+        # Got the link to the image
+        PICURL=`/bin/cat /tmp/pic_url`
+ 
+        echo  "Downloading image"
+        wget --quiet $PICURL -O $PICTURES_DIR/${TODAY}_ngeo.jpg
+ 
+		
+		#This string is ONLY for Nokia N900
+	echo "Setting image as wallpaper"
+	gconftool -s --type string /apps/osso/hildon-desktop/views/1/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+	gconftool -s --type string /apps/osso/hildon-desktop/views/2/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+	gconftool -s --type string /apps/osso/hildon-desktop/views/3/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+	gconftool -s --type string /apps/osso/hildon-desktop/views/4/bg-image ~/MyDocs/photos/${TODAY}_ngeo.jpg
+ 
+    # If the picture is the same
+    else
+        echo "Picture is the same, finishing up"
+    fi
+	
 fi
  
 clean_up
