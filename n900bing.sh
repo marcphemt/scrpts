@@ -106,7 +106,7 @@ else
 fi
 
 
-/usr/bin/dbus-send --print-reply --dest=com.nokia.image_viewer /com/nokia/image_viewer com.nokia.image_viewer.mime_open string:file:///home/user/MyDocs/photos/${TODAY}_ngeo.jpg
+/usr/bin/dbus-send --print-reply --dest=com.nokia.image_viewer /com/nokia/image_viewer com.nokia.image_viewer.mime_open string:file:///home/user/MyDocs/bing/$picName
 echo "If you like the new photo press ENTER otherwise just close x-term!"
 read
 
