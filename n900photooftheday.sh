@@ -71,7 +71,7 @@ echo "*******************************************************"
 echo "To continue press ENTER"
 read
 # If we don't have the image already today
-if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
+if [ ! -e ~/MyDocs/photos/${TODAY}_ngeo.jpg ]; then
     echo "We don't have the picture saved, save it"
  
     get_page
@@ -100,7 +100,7 @@ else
     get_page
  
     # Got the link to the image
-    PICURL=`/bin/cat /tmp/pic_url`
+    PICURL=`/bin/cat ~/MyDocs/pic_url`
  
     echo  "Picture URL is: ${PICURL}"
  
