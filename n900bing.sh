@@ -89,6 +89,9 @@ echo -e "*$blue This script is set up for N900 ONLY $z                *"
 echo "*******************************************************"
 echo "To continue press ENTER"
 read
+if [ ! -d "$saveDir" ]; then
+mkdir $saveDir
+fi
 
 if wget --quiet --spider "$desiredPicURL"
 then
