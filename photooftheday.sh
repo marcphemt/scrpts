@@ -71,6 +71,9 @@ echo -e "*$blue other *buntu system).$z                               *"
 echo "*******************************************************"
 echo "To continue press ENTER"
 read
+if [ ! -d "$PICTURE_DIR" ]; then
+mkdir $PICTURE_DIR
+fi
 # If we don't have the image already today
 if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
     echo "We don't have the picture saved, save it"
