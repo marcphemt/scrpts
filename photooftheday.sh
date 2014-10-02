@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright (c) 2011 Josh Schreuder
 # http://www.postteenageliving.com
-# Modified by MarcPhemt (mrc.mng.mm@gmail.com) 2014
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -84,12 +84,17 @@ if [ ! -e ~/Immagini/${TODAY}_ngeo.jpg ]; then
  
     echo  "Downloading image"
     wget --quiet $PICURL -O $PICTURES_DIR/${TODAY}_ngeo.jpg
+	
+	 gpicview  $PICTURES_DIR/${TODAY}_ngeo.jpg 
+     echo "If you like the image just press enter..or close the terminal"
+     read
  
     #echo "Setting image as wallpaper"
     #gconftool-2 -t string -s /desktop/gnome/background/picture_filename $PICTURES_DIR/${TODAY}_ngeo.jpg
-    
+   
     echo "Setting image as wallpaper"
     nitrogen --set-scaled --save $PICTURES_DIR/${TODAY}_ngeo.jpg 
+	
 
 # Else if we have it already, check if it's the most updated copy
 else
@@ -114,12 +119,18 @@ else
  
         echo  "Downloading image"
         wget --quiet $PICURL -O $PICTURES_DIR/${TODAY}_ngeo.jpg
+		
+		 gpicview  $PICTURES_DIR/${TODAY}_ngeo.jpg 
+		 echo "If you like the image just press enter..or close the terminal"
+         read
  
         #echo "Setting image as wallpaper"
         #gconftool-2 -t string -s /desktop/gnome/background/picture_filename $PICTURES_DIR/${TODAY}_ngeo.jpg
- 
+
         echo "Setting image as wallpaper"
         nitrogen --set-scaled --save $PICTURES_DIR/${TODAY}_ngeo.jpg
+		
+		
  
     # If the picture is the same
     else
