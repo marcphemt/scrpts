@@ -46,7 +46,7 @@ xmlURL="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=$LOC"
 
 # $saveDir is used to set the location where Bing pics of the day
 # are stored. $HOME holds the path of the current user's home directory
-saveDir="/home/marcphemt/bing/"
+saveDir="/home/$USER/bing/"
 # Create saveDir if it does not already exist
 #mkdir -p $saveDir
 # Set picture options
@@ -134,17 +134,19 @@ location
 function wa()
 {
 
-gpicview /home/marcphemt/bing/$picName
+gpicview /home/$USER/bing/$picName
 echo "If you like the image just press enter."
 echo "if you want to see other images type r."
 echo "if you don't like the image just close the terminal!"
 read VAR
 if [ $VAR == r ]; then
-rm /home/marcphemt/bing/$picName
+rm /home/$USER/bing/$picName
 location
 else
 echo "Setting image as wallpaper"
-nitrogen --set-scaled --save /home/marcphemt/bing/$picName #$saveDir/$picName 
+nitrogen --set-scaled --save /home/$USER/bing/$picName
+ #echo "Setting image as wallpaper"
+ #gconftool-2 -t string -s /desktop/gnome/background/picture_filename /home/$USER/bing/$picName
 exit 
 #done
 fi;
