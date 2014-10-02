@@ -26,19 +26,8 @@ yell="\e[1;33m"
 blue="\e[0;34m"
 z="\e[0m"
 
-echo "===================="
-echo "== BING Wallpaper =="
-echo "===================="
-echo "*******************************************************"
-echo -e "* This script will download and set$yell AUTOMATICALLY$z the *"
-echo "* BING daily photo in your machine. *"
-echo -e "* To set the download lacation$green open this script with$z *"
-echo -e "*$green your notepad$z (like leafpad, medit, etc) and go to *"
-echo -e "*$yell OPTIONS$z, then set$red PICTURES_DIR=~/$z of your choise. *"
-echo -e "*$blue This script is set up for N900 ONLY $z *"
-echo "*******************************************************"
-echo "To continue press ENTER"
-read
+function download()
+{
 echo -e "$red Downloading $z"
 # $bing is needed to form the fully qualified URL for
 # the Bing pic of the day
@@ -52,15 +41,14 @@ bing="www.bing.com"
 #
 # The idx parameter determines where to start from. 0 is the current day,
 # 1 the previous day, etc.
-xmlURL="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=en-US"
+#xmlURL="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=ja-JP"
+xmlURL="http://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=$LOC"
+
 # $saveDir is used to set the location where Bing pics of the day
 # are stored. $HOME holds the path of the current user's home directory
-saveDir="/home/$USER/bing/"
+saveDir="/home/marcphemt/bing/"
 # Create saveDir if it does not already exist
 #mkdir -p $saveDir
-if [ ! -d "$saveDir" ]; then
-mkdir $saveDir
-fi
 # Set picture options
 # Valid options are: none,wallpaper,centered,scaled,stretched,zoom,spanned
 picOpts="zoom"
@@ -85,18 +73,81 @@ then
 picName=${desiredPicURL##*/}
 # Download the Bing pic of the day at desired resolution
 curl -s -o $saveDir$picName $desiredPicURL
+#mv ~/MyDocs/bing/$picName ~/MyDocs/bing/$TODAY_bing.jpg
 else
 # Set picName to the default picName
 picName=${defaultPicURL##*/}
 # Download the Bing pic of the day at default resolution
 curl -s -o $saveDir$picName $defaultPicURL
-fi
-gpicview /home/$USER/bing/$picName
-echo "If you like the image just press enter..or close the terminal"
-read
-echo "Setting image as wallpaper"
-nitrogen --set-scaled --save /home/marcphemt/bing/$picName 
+fi;
 
-#echo "Setting image as wallpaper"
-#gconftool-2 -t string -s /desktop/gnome/background/picture_filename /home/$USER/bing/$picName
-exit
+wa
+}
+
+function location()
+{
+
+echo "Choose location:"
+echo "Japan (1), USA (2), England (3), German (4), New Zeland (5), China (6)"
+read A
+ if [ $A == 1 ]; then
+ LOC='ja-JP'
+ elif [ $A == 2 ]; then
+ LOC='en-US'
+ elif [ $A == 3 ]; then
+ LOC='en-UK'
+ elif [ $A == 4 ]; then
+ LOC='de-DE'
+ elif [ $A == 5 ]; then
+ LOC='en-NZ'
+ elif [ $A == 6 ]; then
+ LOC='zh-CN'
+ fi
+ 
+ download
+ 
+ }
+ 
+function begin()
+{
+ 
+
+echo "===================="
+echo "== BING Wallpaper =="
+echo "===================="
+echo "*******************************************************"
+echo -e "* This script will download and set$yell AUTOMATICALLY$z the *"
+echo "* BING daily photo in your machine. *"
+echo -e "* To set the download lacation$green open this script with$z *"
+echo -e "*$green your notepad$z (like leafpad, medit, etc) and go to *"
+echo -e "*$yell OPTIONS$z, then set$red PICTURES_DIR=~/$z of your choise. *"
+echo -e "*$blue This script is set up for N900 ONLY $z *"
+echo "*******************************************************"
+echo "To continue press ENTER"
+read
+
+location
+}
+
+#while [ 0 ]
+#do
+function wa()
+{
+
+gpicview /home/marcphemt/bing/$picName
+echo "If you like the image just press enter."
+echo "if you want to see other images type r."
+echo "if you don't like the image just close the terminal!"
+read VAR
+if [ $VAR == r ]; then
+rm /home/marcphemt/bing/$picName
+location
+else
+echo "Setting image as wallpaper"
+nitrogen --set-scaled --save /home/marcphemt/bing/$picName #$saveDir/$picName 
+exit 
+#done
+fi;
+}
+
+begin
