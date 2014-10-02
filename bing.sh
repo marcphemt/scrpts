@@ -126,6 +126,10 @@ echo "*******************************************************"
 echo "To continue press ENTER"
 read
 
+if [ ! -d "$saveDir" ]; then
+mkdir $saveDir
+fi
+
 location
 }
 
